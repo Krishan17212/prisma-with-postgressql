@@ -42,4 +42,43 @@ const register = async (req, res) => {
   }
 };
 
-export { register };
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({
+        message: `All fields ["Email", "Password"] are required`,
+      });
+    }
+
+    const userExists = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!userExists) {
+      return res.status(404).json({
+        message: `User with email ${email} not found`,
+      });
+    }
+    const isPasswordValid = await bcrypt.compare(password, userExists.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        message: "Invalid password",
+      });
+    }
+
+    res.status(200).json({
+      message: "User logged in successfully",
+      data: {
+        id: userExists.id,
+        name: userExists.name,
+        email: userExists.email,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export { register, login };
