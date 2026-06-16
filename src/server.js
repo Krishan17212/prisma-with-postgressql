@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
   res.send("<h1>Server is running...</h1>");
 });
 
-app.listen(conf.port, () => {
+const server = app.listen(conf.port, () => {
   console.log(`Server is running on port ${conf.port}`);
 });
 
