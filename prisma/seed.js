@@ -1,5 +1,5 @@
-import { PrismaClient } from "../../src/generated/prisma/client.ts";
-import { conf } from "../../src/config/config.js";
+import { PrismaClient } from "../src/generated/prisma/client.ts";
+import { conf } from "../src/config/config.js";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 const connectionString = conf.databaseUrl;
