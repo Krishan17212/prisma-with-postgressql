@@ -31,6 +31,8 @@ const register = async (req, res) => {
       },
     });
 
+    const token = generateToken(user.id, res);
+
     res.status(201).json({
       message: "User registered successfully",
       data: {
@@ -38,6 +40,7 @@ const register = async (req, res) => {
         name: user.name,
         email: user.email,
       },
+      token,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -70,6 +73,8 @@ const login = async (req, res) => {
       });
     }
 
+    const token = generateToken(userExists.id, res);
+
     res.status(200).json({
       message: "User logged in successfully",
       data: {
@@ -77,6 +82,7 @@ const login = async (req, res) => {
         name: userExists.name,
         email: userExists.email,
       },
+      token,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
