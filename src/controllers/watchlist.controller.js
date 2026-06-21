@@ -160,7 +160,7 @@ const deleteMovie = async (req, res) => {
       return res.status(404).json({ error: "Movie not found in watchlist" });
     }
     const watchlist = await prisma.watchlistItem.delete({
-      where: { id: id },
+      where: { id: watchlistExist.id },
     });
     return res.status(200).json({
       message: "Movie deleted from watchlist successfully",
