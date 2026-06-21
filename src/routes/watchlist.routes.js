@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.use(authMiddleWare);
 
+// Routes
 router.get("/", getAllWatchlistItems);
 router.post("/", addToWatchlist);
 router.put("/:id", updateMovie);
