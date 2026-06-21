@@ -1,21 +1,24 @@
 import express from "express";
+import { authMiddleWare } from "../middleware/auth.middleware.js";
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.post("/", (req, res) => {
+router.use(authMiddleWare);
+
+router.post("/", (req, res) => {
   res.send({ httpMethod: "POST", message: "Movie created successfully" });
 });
 
-routes.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.send({ httpMethod: "GET", message: "Movie fetched successfully" });
 });
 
-routes.put("/", (req, res) => {
+router.put("/", (req, res) => {
   res.send({ httpMethod: "PUT", message: "Movie updated successfully" });
 });
 
-routes.delete("/", (req, res) => {
+router.delete("/", (req, res) => {
   res.send({ httpMethod: "DELETE", message: "Movie deleted successfully" });
 });
 
-export default routes;
+export default router;

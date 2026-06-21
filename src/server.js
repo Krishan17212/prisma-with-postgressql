@@ -2,6 +2,7 @@ import express from "express";
 import { conf } from "./config/config.js";
 import movieRoutes from "./routes/movie.routes.js";
 import authRoutes from "./routes/auth.route.js";
+import watchlistRoutes from "./routes/watchlist.routes.js";
 import { connectDB, disconnectDb } from "./config/db.js";
 
 connectDB();
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/watchlist", watchlistRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h1>Server is running...</h1>");
