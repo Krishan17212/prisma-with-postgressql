@@ -134,4 +134,44 @@ const updateMovie = async (req, res) => {
   }
 };
 
-export { addToWatchlist, getAllWatchlistItems, updateMovie };
+const deleteMovie = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res
+      .status(400)
+      .json({ error: "ID is required in request parameters" });
+  }
+  try {
+    let watchlistExist = await prisma.watchlistItem.findFirst({
+      where: {
+        id: id,
+        userId: req.user.id,
+      },
+    });
+    if (!watchlistExist) {
+      watchlistExist = await prisma.watchlistItem.findFirst({
+        where: {
+          movieId: id,
+          userId: req.user.id,
+        },
+      });
+    }
+    if (!watchlistExist) {
+      return res.status(404).json({ error: "Movie not found in watchlist" });
+    }
+    const watchlist = await prisma.watchlistItem.delete({
+      where: { id: id },
+    });
+    return res.status(200).json({
+      message: "Movie deleted from watchlist successfully",
+      watchlist,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Failed to delete movie from watchlist",
+      message: error.message,
+    });
+  }
+};
+
+export { addToWatchlist, getAllWatchlistItems, updateMovie, deleteMovie };
