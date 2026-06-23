@@ -32,3 +32,5 @@ const updateWatchlistSchema = z.object({
     .optional(),
   notes: z.string().optional(),
 });
+
+export { addWatchlistSchema, updateWatchlistSchema };
