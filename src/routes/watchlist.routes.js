@@ -10,6 +10,7 @@ import { validateRequest } from "../middleware/validate.middleware.js";
 import {
   addWatchlistSchema,
   updateWatchlistSchema,
+  deleteWatchlistSchema,
 } from "../validators/watchlistValidator.js";
 
 const router = express.Router();
@@ -20,6 +21,6 @@ router.use(authMiddleWare);
 router.get("/", getAllWatchlistItems);
 router.post("/", validateRequest(addWatchlistSchema), addToWatchlist);
 router.put("/:id", validateRequest(updateWatchlistSchema), updateMovie);
-router.delete("/:id", deleteMovie);
+router.delete("/:id", validateRequest(deleteWatchlistSchema), deleteMovie);
 
 export default router;
