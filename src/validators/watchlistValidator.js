@@ -33,4 +33,8 @@ const updateWatchlistSchema = z.object({
   notes: z.string().optional(),
 });
 
-export { addWatchlistSchema, updateWatchlistSchema };
+const deleteWatchlistSchema = z.object({
+  id: z.string().uuid({ message: "ID is required in request parameters" }),
+});
+
+export { addWatchlistSchema, updateWatchlistSchema, deleteWatchlistSchema };
